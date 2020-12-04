@@ -11,7 +11,6 @@ class Routing {
         if ($request == GEN_URL && $method == 'POST') {
             $controllerName = 'GenerateController';
             $modelName = 'GenerateModel';
-            $action = 'action';
 
         } elseif ($request == GET_URL && $method == 'GET') {
             $controllerName = 'GetController';
@@ -25,6 +24,7 @@ class Routing {
             header('HTTP/1.1 400 Bad Request');
             http_response_code(400);
             echo json_encode(array(
+                'ok' => 'false',
                 'error' => 'Bad Request'
             ));
             die();
@@ -33,11 +33,7 @@ class Routing {
         require_once CONTROLLER_PATH . $controllerName . ".php";
         require_once MODEL_PATH . $modelName . ".php";
 
-        $controller = new $controllerName();
-    }
-
-    public function errorPage() {
-
+        $controller = new $controllerName(); //переменная $controller не применяется (!!!)
     }
 
 }

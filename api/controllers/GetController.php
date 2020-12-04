@@ -1,8 +1,6 @@
 <?php
 
-class GetController {
-
-    private $model;
+class GetController extends Controller {
 
     public function __construct()
     {
@@ -16,17 +14,8 @@ class GetController {
 
         $data = json_decode(file_get_contents("php://input"));
 
-        if (isset($data->id)) {
-            $id = (int)$data->id;
-        } else {
-            header('HTTP/1.1 400 Bad Request');
-            http_response_code(400);
-            echo json_encode(array(
-                "ok" => "false",
-                'error' => 'Bad Request'
-            ));
-            die();
-        }
+        $this->checkToken($data);
+        $id = $this->checkID($data);
 
         $seq = $this->model->getStrByID($id);
 

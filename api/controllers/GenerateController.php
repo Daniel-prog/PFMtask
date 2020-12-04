@@ -1,8 +1,6 @@
 <?php
 
-class GenerateController {
-
-    private $model;
+class GenerateController extends Controller {
 
     public function __construct()
     {
@@ -13,6 +11,10 @@ class GenerateController {
         header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
         $this->model = new GenerateModel();
+
+        $data = json_decode(file_get_contents("php://input"));
+
+        $this->checkToken($data);
 
         //Создаём случайную последовательность символов
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -26,10 +28,10 @@ class GenerateController {
         }
 
         $id = $this->model->insert($random_seq);
+        $this->model->addChange($id, $data->token);
 
         http_response_code(200);
-        echo json_encode(array("id" => "$id"), JSON_UNESCAPED_UNICODE);
+        echo json_encode(array("ok" => "true", "id" => "$id"), JSON_UNESCAPED_UNICODE);
 
     }
-
 }

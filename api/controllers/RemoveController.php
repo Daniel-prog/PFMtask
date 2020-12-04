@@ -1,8 +1,6 @@
 <?php
 
-class RemoveController {
-
-    private $model;
+class RemoveController extends Controller {
 
     public function __construct()
     {
@@ -16,19 +14,12 @@ class RemoveController {
 
         $data = json_decode(file_get_contents("php://input"));
 
-        if (isset($data->id)) {
-            $id = (int)$data->id;
-        } else {
-            header('HTTP/1.1 400 Bad Request');
-            http_response_code(400);
-            echo json_encode(array(
-                "ok" => "false",
-                'error' => 'Bad Request'
-            ));
-            die();
-        }
+        $this->checkToken($data);
+        $id = $this->checkID($data);
 
         $this->model->remove($id);
+
+        $this->model->addChange($id, $data->token);
 
         http_response_code(200);
         echo json_encode(array("ok" => "true", "message" => "String removed."), JSON_UNESCAPED_UNICODE);

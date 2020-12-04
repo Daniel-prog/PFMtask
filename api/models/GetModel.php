@@ -11,6 +11,16 @@ class GetModel extends Model {
 
         $seq = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $seq['sequence'];
+        if ($seq['sequence'] != NULL) {
+            return $seq['sequence'];
+        } else {
+            header('HTTP/1.1 400 Bad Request');
+            http_response_code(400);
+            echo json_encode(array(
+                "ok" => "false",
+                'error' => 'Bad Request'
+            ));
+            die();
+        }
     }
 }

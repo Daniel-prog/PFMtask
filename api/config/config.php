@@ -10,6 +10,6 @@ define("RM_URL", "/api/remove");
 require_once("db.php");
 require_once("router.php");
 require_once MODEL_PATH . 'Model.php';
-//require_once CONTROLLER_PATH . 'Controller.php';
+require_once CONTROLLER_PATH . 'Controller.php';
 
 Routing::buildRoute();
