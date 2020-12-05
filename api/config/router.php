@@ -1,4 +1,6 @@
 <?php
+//Класс роутинга
+
 class Routing {
 
     public static function buildRoute() {
@@ -8,32 +10,32 @@ class Routing {
         $request = $a[0];
         $method = $_SERVER['REQUEST_METHOD'];
 
+        //POST /api/generate (возвращает идентификатор сгенерированной строки)
         if ($request == GEN_URL && $method == 'POST') {
             $controllerName = 'GenerateController';
             $modelName = 'GenerateModel';
 
+            //GET /api/by-id (возвращает строку по идентификатору)
         } elseif ($request == GET_URL && $method == 'GET') {
             $controllerName = 'GetController';
             $modelName = 'GetModel';
 
+            //DELETE /api/remove (удаление строки по идентификатору)
         } elseif ($request == RM_URL && $method == 'DELETE') {
             $controllerName = 'RemoveController';
             $modelName = 'RemoveModel';
 
+            //При неправильных запросах
         } else {
-            header('HTTP/1.1 400 Bad Request');
-            http_response_code(400);
-            echo json_encode(array(
-                'ok' => 'false',
-                'error' => 'Bad Request'
-            ));
-            die();
+            $controllerName = 'ErrorController';
+            $modelName = 'ErrorModel';
         }
 
         require_once CONTROLLER_PATH . $controllerName . ".php";
         require_once MODEL_PATH . $modelName . ".php";
 
-        $controller = new $controllerName(); //переменная $controller не применяется (!!!)
+        $controller = new $controllerName();
+        $controller->action();
     }
 
 }

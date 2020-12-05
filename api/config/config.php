@@ -1,4 +1,5 @@
 <?php
+//Задаём константы, подключаем родительские классы
 
 define("ROOT", $_SERVER['DOCUMENT_ROOT']);
 define("CONTROLLER_PATH", ROOT . "/api/controllers/");

@@ -4,18 +4,22 @@ class RemoveController extends Controller {
 
     public function __construct()
     {
+        $this->model = new RemoveModel();
+    }
+
+    public function action()
+    {
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json; charset=UTF-8");
         header("Access-Control-Allow-Methods: DELETE");
         header("Access-Control-Max-Age: 3600");
         header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-        $this->model = new RemoveModel();
-
         $data = json_decode(file_get_contents("php://input"));
 
         $this->checkToken($data);
         $id = $this->checkID($data);
+        $this->model->checkSusRequests($data->token);
 
         $this->model->remove($id);
 
