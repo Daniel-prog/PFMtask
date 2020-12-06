@@ -9,6 +9,5 @@ class ErrorModel extends Model {
         $stmt->bindValue(":token", $token, PDO::PARAM_STR);
         $stmt->bindValue(":message", $message, PDO::PARAM_STR);
         $stmt->execute();
-
     }
 }

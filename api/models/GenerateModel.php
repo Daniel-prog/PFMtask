@@ -22,6 +22,5 @@ class GenerateModel extends Model {
         $stmt->bindValue(":id", $id, PDO::PARAM_INT);
         $stmt->bindValue(":token", $token, PDO::PARAM_STR);
         $stmt->execute();
-
     }
 }
