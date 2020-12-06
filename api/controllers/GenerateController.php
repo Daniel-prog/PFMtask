@@ -36,6 +36,5 @@ class GenerateController extends Controller {
 
         http_response_code(200);
         echo json_encode(array("ok" => "true", "id" => "$id"), JSON_UNESCAPED_UNICODE);
-
     }
 }

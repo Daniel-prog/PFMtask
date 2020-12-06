@@ -32,7 +32,5 @@ class ErrorController extends Controller {
             'error' => 'Bad Request'
         ));
         die();
-
     }
-
 }

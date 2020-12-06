@@ -26,7 +26,5 @@ class GetController extends Controller {
 
         http_response_code(200);
         echo json_encode(array("ok" => "true", "string" => "$seq"), JSON_UNESCAPED_UNICODE);
-
     }
-
 }
